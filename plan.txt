@@ -1,0 +1,11 @@
+Part 1:
+Make a stopwatch interface that you can start and stop manually
+
+Part 2:
+Incorporate video into that program so that one can manually start and stop the timer after reviewing the video footage
+
+Part 3:
+Make it so that the program can communicate with another computer running the same program
+
+Part 4:
+Automate part 2 using AI

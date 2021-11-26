@@ -16,42 +16,41 @@ import datetime
 class Stopwatch:
     def __init__(self):
         self.pauseStart = 0
-        self.startTime = -1
+        self.startTime = 0
         self.running = False
 
-
     def start(self, label):
-        print("Started stopwatch")
+        # print("Started stopwatch")
         self.updateLabel(label)
         if not self.running:
-            if self.startTime == -1:
-                self.startTime = time.time()
+            if self.startTime == 0:
+                self.startTime = float(str(time.time())[:-4])
             else:
-                self.startTime += time.time() - self.pauseStart
+                self.startTime += float(str(time.time())[:-4]) - self.pauseStart
         self.running = True
     def pause(self):
-        print("Paused stopwatch")
+        # print("Paused stopwatch")
         if self.running:
-            self.pauseStart = time.time()
+            self.pauseStart = float(str(time.time())[:-4])
             # print(f"PauseStart changed to: {self.pauseStart}")
             self.running = False
 
     def reset(self):
-        print("Reset stopwatch")
-        if self.running:
-            self.running = False
-            self.startTime = -1
+        # print("Reset stopwatch")
+        self.running = False
+        self.startTime = float(str(time.time())[:-4])
+        self.pauseStart = self.startTime
 
     def getCurTime(self):
         if self.running:
             # print(time.time, self.startTime)
-            return str(datetime.timedelta(seconds=time.time() - self.startTime))
+            return str(datetime.timedelta(seconds=time.time() - self.startTime))[:-3]
         else:
-            return str(datetime.timedelta(seconds=self.pauseStart-self.startTime))
+            return str(datetime.timedelta(seconds=self.pauseStart-self.startTime))[:-3]
 
     def updateLabel(self, label): # Update the label 30 times each second?
-
-
+        label.config(text=self.getCurTime())
+        self.window.after(30, self.updateLabel, label)
 
     def displayStopwatch(self):
         self.window = tk.Tk()
@@ -67,21 +66,5 @@ class Stopwatch:
         self.window.mainloop()
 
 
-
-
 sw = Stopwatch()
 sw.displayStopwatch()
-
-# sw.start()
-# print(f"Started at: {time.time()}")
-# time.sleep(1)
-# print("After one second:", sw.getCurTime())
-# sw.pause()
-# print("Pausing for 2 seconds...")
-# time.sleep(2)
-# print(f"Slept 2 seconds, stopwatch is:{sw.getCurTime()}")
-# sw.start()
-# time.sleep(2)
-# sw.pause()
-# print(f"Final: {sw.getCurTime()}")
-#

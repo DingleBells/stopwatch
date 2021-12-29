@@ -7,7 +7,7 @@ def scrollVideo(filepath):
     cap = cv2.VideoCapture(filepath)
     framelist = []
     counter = 1
-    frameCount = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    frameCount = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))+1
     start = time.time()
     while True:
         print(f"Loading frame {counter} of {frameCount}")
@@ -22,6 +22,8 @@ def scrollVideo(filepath):
     while True:
         # Lock frame size to 640x480
         cv2.imshow("Frame", framelist[counter])
+        # Display frame number in top right corner
+        cv2.putText(framelist[counter], f"Frame {counter + 1} of {frameCount}", (10, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1)
         if cv2.waitKey(0) & 0xFF == ord("q"):
             break
         # Press ing right arrow key will move to next frame
